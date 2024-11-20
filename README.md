@@ -32,4 +32,4 @@ Run exe:
 gotenberg.exe
 ```
 
-Enjoy.
+I'm not really in understanding of licensing and how does it work, so please refer to the original repo.
