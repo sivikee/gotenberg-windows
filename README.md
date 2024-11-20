@@ -3,33 +3,36 @@
     <h3 align="center">Gotenberg</h3>
     <p align="center">A windows modification</p>
     <p align="center">
-    I needed a version where you only need to generate PDF to HTML so i stripped all the other functionality.
+    I needed a version where you only need to generate PDF to HTML, so I stripped all the other functionality.
+    This is an undockerized version of Gotenberg that works without Docker.
     </p>
 </p>
 
 ---
+## What is this?
+A Windows single executable (exe) file to run Gotenberg in environments where no Docker is available. 
+You can also build it for Linux; just set the `GOARCH` environment variable before building.
 
-
-
-# BEVARE!!!
-Only the /forms/chromium/convert/html/ endpoint works!
-
-
+**BEWARE!!!**
+Only the `/forms/chromium/convert/html/` endpoint works!
 
 ## Building
-- Install go 1.23
-- Run build.bat
+- Install Go 1.23
+- Run `build.bat`
 
 ## Quick Start
 
-Set CHROMIUM_BIN_PATH in your command line or as enviromnent variable.
-```
+Set `CHROMIUM_BIN_PATH` in your command line or as an environment variable.
+
+```bash
 set CHROMIUM_BIN_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe
 ```
 
-Run exe:
-```
+Run executable:
+
+```bash
 gotenberg.exe
 ```
 
-I'm not really in understanding of licensing and how does it work, so please refer to the original repo.
+I'm not fully clear on licensing and how it works, so please refer to the original repository for details.
+
