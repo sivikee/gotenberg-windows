@@ -420,16 +420,6 @@ func (mod *Chromium) Provision(ctx *gotenberg.Context) error {
 	mod.browser = newChromiumBrowser(mod.args)
 	mod.supervisor = gotenberg.NewProcessSupervisor(mod.logger, mod.browser, flags.MustInt64("chromium-restart-after"), flags.MustInt64("chromium-max-queue-size"))
 
-	// PDF Engine.
-	provider, err := ctx.Module(new(gotenberg.PdfEngineProvider))
-	if err != nil {
-		return fmt.Errorf("get PDF engine provider: %w", err)
-	}
-	engine, err := provider.(gotenberg.PdfEngineProvider).PdfEngine()
-	if err != nil {
-		return fmt.Errorf("get PDF engine: %w", err)
-	}
-	mod.engine = engine
 
 	return nil
 }

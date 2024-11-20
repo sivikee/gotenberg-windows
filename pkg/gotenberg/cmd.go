@@ -8,7 +8,6 @@ import (
 	"io"
 	"os/exec"
 	"strings"
-	"syscall"
 
 	"go.uber.org/zap"
 )
@@ -27,7 +26,6 @@ type Cmd struct {
 // See https://medium.com/@felixge/killing-a-child-process-and-all-of-its-children-in-go-54079af94773.
 func Command(logger *zap.Logger, binPath string, args ...string) *Cmd {
 	cmd := exec.Command(binPath, args...)
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 
 	return &Cmd{
 		ctx:     nil,
@@ -47,7 +45,6 @@ func CommandContext(ctx context.Context, logger *zap.Logger, binPath string, arg
 	}
 
 	cmd := exec.CommandContext(ctx, binPath, args...)
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 
 	return &Cmd{
 		ctx:     ctx,
@@ -188,23 +185,22 @@ func (cmd *Cmd) pipeOutput() error {
 // See https://medium.com/@felixge/killing-a-child-process-and-all-of-its-children-in-go-54079af94773.
 func (cmd *Cmd) Kill() error {
 	if cmd.process == nil {
-		// We cannot use the logger here, because for whatever reason using it
-		// result to a panic.
-		// cmd.logger.Debug("no process, skip killing")
+		// Skip killing if the process is nil
 		return nil
 	}
 
-	err := syscall.Kill(-cmd.process.Process.Pid, syscall.SIGKILL)
+	// Windows-specific process termination
+	err := cmd.process.Process.Kill()
 	if err == nil {
-		cmd.logger.Debug("unix process killed")
+		cmd.logger.Debug("Windows process killed")
 		return nil
 	}
 
 	// If the process does not exist anymore, the error is irrelevant.
-	if strings.Contains(err.Error(), "no such process") {
-		cmd.logger.Debug("unix process already killed")
+	if strings.Contains(err.Error(), "process already finished") {
+		cmd.logger.Debug("Windows process already killed")
 		return nil
 	}
 
-	return fmt.Errorf("kill unix process: %w", err)
+	return fmt.Errorf("kill Windows process: %w", err)
 }
