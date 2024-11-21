@@ -22,11 +22,7 @@ Only the `/forms/chromium/convert/html/` endpoint works!
 
 ## Quick Start
 
-Set `CHROMIUM_BIN_PATH` in your command line or as an environment variable.
-
-```bash
-set CHROMIUM_BIN_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe
-```
+Download latest chromium build and copy it to the chromium directory next to you executable.
 
 Run executable:
 

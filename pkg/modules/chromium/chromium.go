@@ -382,10 +382,7 @@ func (mod *Chromium) Provision(ctx *gotenberg.Context) error {
 	mod.autoStart = flags.MustBool("chromium-auto-start")
 	mod.disableRoutes = flags.MustBool("chromium-disable-routes")
 
-	binPath, ok := os.LookupEnv("CHROMIUM_BIN_PATH")
-	if !ok {
-		return errors.New("CHROMIUM_BIN_PATH environment variable is not set")
-	}
+	binPath := "./chromium/chrome.exe"
 
 	mod.args = browserArguments{
 		binPath:                  binPath,

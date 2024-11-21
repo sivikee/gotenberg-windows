@@ -211,7 +211,7 @@ func TestChromium_Validate(t *testing.T) {
 		},
 		{
 			scenario:    "validate success",
-			binPath:     os.Getenv("CHROMIUM_BIN_PATH"),
+			binPath:     "./chromium/chrome.exe",
 			expectError: false,
 		},
 	} {
